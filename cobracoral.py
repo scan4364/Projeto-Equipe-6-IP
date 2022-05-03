@@ -8,6 +8,7 @@ SPORTIMG = pygame.image.load('sport.png')
 SALGUEIROIMG = pygame.image.load('SALGUEIRO.png')
 cobracabeca = pygame.image.load('cabecacobra.png')
 
+
 # Helper functions
 # função que escolhe um lugar aleatoria para o spw dos times 
 def on_grid_random():
@@ -34,7 +35,12 @@ pygame.display.set_caption('Cobra Coral')
 #define nossa cobra em tamanho e skin
 snake = [(320, 320), (352, 320), (384,320)]
 # a skin tem que ser umaimagem 32x que vai ser o tanho real do objerto para a colisão funcianar corretamente
-snake_skin = cobracabeca
+snake_head = cobracabeca
+snake_corpo_verm = pygame.image.load('c_corpo_verm.png')
+snake_corpo_preto = pygame.image.load('c_corpo_preto.png')
+snake_cauda_verm = pygame.image.load('c_cauda_verm.png')
+snake_cauda_preto = pygame.image.load('c_cauda_preto.png')
+
 # snake_skin = pygame.Surface((32,32))
 # snake_skin.fill((255,0,255)) #White
 
@@ -161,7 +167,21 @@ while not game_over:
 
     # atualiza a posiçãode cada pedaço da cobra na tela
     for pos in snake:
-        screen.blit(snake_skin,pos)
+        #cabeça da cobra
+        if snake.index(pos) == 0:
+            screen.blit(snake_head,pos)
+        #cauda da cobra
+        elif snake.index(pos) == len(snake) - 1:
+            #a cor da cauda muda de acordo com o tamanho da cobra
+            if len(snake)%2 == 1:
+                screen.blit(snake_cauda_preto,pos)
+            else:
+                screen.blit(snake_cauda_verm,pos)
+        #corpo da cobra que recebe vermelho nas posições impares e preto nas pares (cabeça é 0)
+        elif snake.index(pos)%2 != 0:
+            screen.blit(snake_corpo_verm,pos)
+        else:
+            screen.blit(snake_corpo_preto,pos)
 
     #comando mais importante o de update da tele, garante que ao final do grande while e vonsiga mostrar tudo que aconteu na tela
     pygame.display.update()
