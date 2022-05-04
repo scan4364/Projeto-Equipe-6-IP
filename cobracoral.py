@@ -38,7 +38,6 @@ pygame.display.set_caption('Cobra Coral')
 
 
 #define nossa cobra em tamanho e skin
-#                       ^(tamanho de que exatamente? O que são essas tuplas?) - Pedro
 snake = [(320, 320), (352, 320), (384,320)]
 # a skin tem que ser umaimagem 32x que vai ser o tanho real do objerto para a colisão funcianar corretamente
 snake_head = cobracabeca
@@ -67,7 +66,7 @@ SPORT = SPORTIMG
 #primeiro é escohlido uma posiçao para a 'maçã' usando a função
 salgueiro_pos = on_grid_random()
 # a skin tem que ser umaimagem 32x que vai ser o tanho real do objerto para a colisão funcianar corretamente
-salgueiro = SALGUEIROIMG
+SALGUEIRO = SALGUEIROIMG
 
 #esse codigo abaixo e quano um novo objeto ainda não recebeu cor
 #apple.fill((255,0,0))
@@ -82,6 +81,11 @@ clock = pygame.time.Clock()
 font = pygame.font.Font('freesansbold.ttf', 18)
 #variavel score que mostra a pontuação
 score = 0
+
+#(para começar a fazer depois:)
+#score_sport = 0
+#score_salgueiro = 0
+#score_nautico = 0   -> (lembrando que a gnt vai trocar o santa cruz pelo nautico)
 
 # variave responsavel para que o jogo nao feche apos um unico update
 game_over = False
@@ -111,7 +115,7 @@ while not game_over:
                 snake_head = rotacao(cobracabeca, 0)
 
     #esse bloco de comando detecta se a colisao com a 'maçã' e adiciona uma nova parte onde era a 'maçã' e redireciona a 'maçã' para umanova posiçao e adiciona a pontuaçao 1
-    if collision(snake[0], santa_pos):
+    if collision(snake[0], santa_pos): # -> snake[0] = coordenada do primeiro pedaço da cobra, que é a cabeça
         santa_pos = on_grid_random()
         snake.append((0,0))
         score = score + 1
@@ -148,7 +152,7 @@ while not game_over:
         
     # o codigo que de fato faz a cobra se mover
     if my_direction == UP:
-        snake[0] = (snake[0][0], snake[0][1] - 32)
+        snake[0] = (snake[0][0], snake[0][1] - 32) # -> snake[0] = (x, y)
     if my_direction == DOWN:
         snake[0] = (snake[0][0], snake[0][1] + 32)
     if my_direction == RIGHT:
@@ -161,7 +165,7 @@ while not game_over:
     screen.blit(fundo,(0,0))
     screen.blit(SANTA, santa_pos)
     screen.blit(SPORT, sport_pos)
-    screen.blit(salgueiro, salgueiro_pos)
+    screen.blit(SALGUEIRO, salgueiro_pos)
 
     
     #marca (desenha) as linhas 
@@ -177,22 +181,22 @@ while not game_over:
     screen.blit(score_font, score_rect)
 
     # atualiza a posiçãode cada pedaço da cobra na tela
-    for pos in snake:
+    for pedaco in snake:
         #cabeça da cobra
-        if snake.index(pos) == 0:
-            screen.blit(snake_head,pos)
+        if snake.index(pedaco) == 0:
+            screen.blit(snake_head, pedaco)
         #cauda da cobra
-        elif snake.index(pos) == len(snake) - 1:
+        elif snake.index(pedaco) == len(snake) - 1:
             #a cor da cauda muda de acordo com o tamanho da cobra
             if len(snake)%2 == 1:
-                screen.blit(snake_cauda_preto,pos)
+                screen.blit(snake_cauda_preto, pedaco)
             else:
-                screen.blit(snake_cauda_verm,pos)
+                screen.blit(snake_cauda_verm, pedaco)
         #corpo da cobra que recebe vermelho nas posições impares e preto nas pares (cabeça é 0)
-        elif snake.index(pos)%2 != 0:
-            screen.blit(snake_corpo_verm,pos)
+        elif snake.index(pedaco)%2 != 0:
+            screen.blit(snake_corpo_verm, pedaco)
         else:
-            screen.blit(snake_corpo_preto,pos)
+            screen.blit(snake_corpo_preto, pedaco)
 
     #comando mais importante o de update da tele, garante que ao final do grande while e vonsiga mostrar tudo que aconteu na tela
     pygame.display.update()
