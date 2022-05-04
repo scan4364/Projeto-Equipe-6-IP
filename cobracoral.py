@@ -100,8 +100,10 @@ while not game_over:
             exit()
 
         #esse conjuntos de evento recebem a informação de qual tecla esta apertada e redireciona a cobra 
+        #sao eles up, down, left e rigth
+        #IMPORTANTE!!!! O Player não pode ir na direção contraria 
         if event.type == KEYDOWN:
-            if event.key == K_UP and my_direction != DOWN:
+            if event.key == K_UP and my_direction != DOWN: # se cima apertou e a cobra não esta indo pra baixo
                 my_direction = UP
                 snake_head = rotacao(cobracabeca, 90)
             if event.key == K_DOWN and my_direction != UP:
