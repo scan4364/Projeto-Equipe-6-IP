@@ -3,7 +3,7 @@ from pygame.locals import *
 
 #IMAGENS IMPORT
 fundo = pygame.image.load('campo.jpg')
-SANTA = pygame.image.load('SANTA.png')
+SANTAIMG = pygame.image.load('SANTA.png')
 SPORTIMG = pygame.image.load('sport.png')
 SALGUEIROIMG = pygame.image.load('SALGUEIRO.png')
 cobracabeca = pygame.image.load('cabecacobra.png')
@@ -31,13 +31,14 @@ RIGHT = 1
 DOWN = 2
 LEFT = 3
 
-#essa sesção e a base do py games para inicar, criar uma janela e dar nome a janlela
+#essa seção e a base do py games para inicar, criar uma janela e dar nome a janela
 pygame.init()
 screen = pygame.display.set_mode((800, 608))
 pygame.display.set_caption('Cobra Coral')
 
 
 #define nossa cobra em tamanho e skin
+#                       ^(tamanho de que exatamente? O que são essas tuplas?) - Pedro
 snake = [(320, 320), (352, 320), (384,320)]
 # a skin tem que ser umaimagem 32x que vai ser o tanho real do objerto para a colisão funcianar corretamente
 snake_head = cobracabeca
@@ -51,9 +52,10 @@ snake_cauda_preto = pygame.image.load('c_cauda_preto.png')
 
 #define uma das "maçãs" que são um dos times
 #primeiro é escohlido uma posiçao para a 'maçã' usando a função
-apple_pos = on_grid_random()
+santa_pos = on_grid_random()
 # a skin tem que ser umaimagem 32x que vai ser o tanho real do objerto para a colisão funcianar corretamente
-apple = SANTA
+SANTA = SANTAIMG
+# (Pergunta: pq foi criada uma variável cópia da img? não seria mais simples só usar a própria img dos times já que não vamos modificá-las) - Pedro
 
 #define uma das "maçãs" que são um dos times
 #primeiro é escohlido uma posiçao para a 'maçã' usando a função
@@ -109,8 +111,8 @@ while not game_over:
                 snake_head = rotacao(cobracabeca, 0)
 
     #esse bloco de comando detecta se a colisao com a 'maçã' e adiciona uma nova parte onde era a 'maçã' e redireciona a 'maçã' para umanova posiçao e adiciona a pontuaçao 1
-    if collision(snake[0], apple_pos):
-        apple_pos = on_grid_random()
+    if collision(snake[0], santa_pos):
+        santa_pos = on_grid_random()
         snake.append((0,0))
         score = score + 1
 
@@ -126,12 +128,12 @@ while not game_over:
         snake.append((0,0))
         score = score + 1
 
-    # Checa se a snake colidio com a bordas
+    # Checa se a snake colidiu com a bordas
     if snake[0][0] == 800 or snake[0][1] == 608 or snake[0][0] < 0 or snake[0][1] < 0:
         #aki entra o son de perdeu
         game_over = True
         break
-    # Checa se a cobra colidio com ele mesma com um for
+    # Checa se a cobra colidiu com ele mesma com um for
     for i in range(1, len(snake) - 1):
         if snake[0][0] == snake[i][0] and snake[0][1] == snake[i][1]:
             game_over = True
@@ -157,7 +159,7 @@ while not game_over:
     #atualização da tela
     screen.fill((0,100,0))
     screen.blit(fundo,(0,0))
-    screen.blit(apple, apple_pos)
+    screen.blit(SANTA, santa_pos)
     screen.blit(SPORT, sport_pos)
     screen.blit(salgueiro, salgueiro_pos)
 
