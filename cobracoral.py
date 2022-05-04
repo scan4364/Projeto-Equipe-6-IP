@@ -16,6 +16,11 @@ def on_grid_random():
     y = random.randint(0,18)
     return (x * 32, y * 32)
 
+# função para girar a cabeça da cobra
+def rotacao(img, angulo):
+    img_rotacionada = pygame.transform.rotate(img, angulo)
+    return img_rotacionada
+
 #função que analisa se ha colisaão de objetos
 def collision(c1, c2):
     return (c1[0] == c2[0]) and (c1[1] == c2[1])
@@ -92,12 +97,16 @@ while not game_over:
         if event.type == KEYDOWN:
             if event.key == K_UP and my_direction != DOWN:
                 my_direction = UP
+                snake_head = rotacao(cobracabeca, 90)
             if event.key == K_DOWN and my_direction != UP:
                 my_direction = DOWN
+                snake_head = rotacao(cobracabeca, -90)
             if event.key == K_LEFT and my_direction != RIGHT:
                 my_direction = LEFT
+                snake_head = rotacao(cobracabeca, 180)
             if event.key == K_RIGHT and my_direction != LEFT:
                 my_direction = RIGHT
+                snake_head = rotacao(cobracabeca, 0)
 
     #esse bloco de comando detecta se a colisao com a 'maçã' e adiciona uma nova parte onde era a 'maçã' e redireciona a 'maçã' para umanova posiçao e adiciona a pontuaçao 1
     if collision(snake[0], apple_pos):
@@ -190,7 +199,7 @@ while not game_over:
 while True:
     #define uma fonte para o texto de game over, local de spw, oq vai ser escrito, e tempo de espera ate a tela fechar
     game_over_font = pygame.font.Font('freesansbold.ttf', 45)
-    game_over_screen = game_over_font.render('Nautico foi para serie D', True, (255, 255, 255))
+    game_over_screen = game_over_font.render('Santinha foi para serie D', True, (255, 255, 255))
     game_over_rect = game_over_screen.get_rect()
     game_over_rect.midtop = (800 / 2, 10)
     screen.blit(game_over_screen, game_over_rect)
