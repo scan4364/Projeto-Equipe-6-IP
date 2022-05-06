@@ -1,6 +1,8 @@
 import pygame, random
 from pygame.locals import *
 
+
+
 #IMAGENS IMPORT
 fundo = pygame.image.load('campo.jpg')
 SANTAIMG = pygame.image.load('SANTA.png')
