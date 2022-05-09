@@ -3,27 +3,35 @@ from turtle import Screen
 import pygame, random
 from pygame.locals import *
 
-
-
 #IMAGENS IMPORT
-fundo1 = pygame.image.load('campo.jpg')
-fundo2 = pygame.image.load('campo.png')
-fundo3 = pygame.image.load('campo.png')
-fundo4 = pygame.image.load('campo.png')
-NAUTICOIMG = pygame.image.load('i_nautico.png')
-SPORTIMG = pygame.image.load('i_sport.png')
-SALGUEIROIMG = pygame.image.load('i_salgueiro.png')
-cobracabeca = pygame.image.load('cabecacobra.png')
-flamengoimg = pygame.image.load('i_flamengo.png')
-corintiansimg = pygame.image.load('i_corintians.png')
-japaoimg = pygame.image.load('i_japao.png')
-jupterimg = pygame.image.load('i_jupiter.png')
-marteimg = pygame.image.load('i_marte.png')
-palmeirasimg = pygame.image.load('i_palmeiras.png')
-saturnoimg = pygame.image.load('i_saturn.png')
-alemanhaimg = pygame.image.load('i_alemanha.png')
-argentinaimg = pygame.image.load('i_argentina.png')
-
+#Campos:
+fundo1 = pygame.image.load('imagens/campos/campo_nordeste.png')
+fundo2 = pygame.image.load('imagens/campos/campo_brasileirao.png')
+fundo3 = pygame.image.load('imagens/campos/campo2.png')
+fundo4 = pygame.image.load('imagens/campos/campo2.png')
+#Times:
+NAUTICOIMG = pygame.image.load('imagens/times/i_nautico.png')
+SPORTIMG = pygame.image.load('imagens/times/i_sport.png')
+SALGUEIROIMG = pygame.image.load('imagens/times/i_salgueiro.png')
+flamengoimg = pygame.image.load('imagens/times/i_flamengo.png')
+corintiansimg = pygame.image.load('imagens/times/i_corintians.png')
+japaoimg = pygame.image.load('imagens/times/i_japao.png')
+jupterimg = pygame.image.load('imagens/times/i_jupiter.png')
+marteimg = pygame.image.load('imagens/times/i_marte.png')
+palmeirasimg = pygame.image.load('imagens/times/i_palmeiras.png')
+saturnoimg = pygame.image.load('imagens/times/i_saturn.png')
+alemanhaimg = pygame.image.load('imagens/times/i_alemanha.png')
+argentinaimg = pygame.image.load('imagens/times/i_argentina.png')
+#Cobra:
+cobracabeca = pygame.image.load('imagens/cobra/cabecacobra.png')
+#define nossa cobra em tamanho e skin
+snake = [(320, 320), (352, 320), (384,320)]
+# a skin tem que ser umaimagem 32x que vai ser o tanho real do objerto para a colisão funcianar corretamente
+snake_head = cobracabeca
+snake_corpo_verm = pygame.image.load('imagens/cobra/c_corpo_verm.png')
+snake_corpo_preto = pygame.image.load('imagens/cobra/c_corpo_preto.png')
+snake_cauda_verm = pygame.image.load('imagens/cobra/c_cauda_verm.png')
+snake_cauda_preto = pygame.image.load('imagens/cobra/c_cauda_preto.png')
 
 #fundo variavel e fundo1 2 3 4 moveis
 fundo = fundo1
@@ -54,16 +62,6 @@ LEFT = 3
 pygame.init()
 screen = pygame.display.set_mode((950, 608))
 pygame.display.set_caption('Cobra Coral')
-
-
-#define nossa cobra em tamanho e skin
-snake = [(320, 320), (352, 320), (384,320)]
-# a skin tem que ser umaimagem 32x que vai ser o tanho real do objerto para a colisão funcianar corretamente
-snake_head = cobracabeca
-snake_corpo_verm = pygame.image.load('c_corpo_verm.png')
-snake_corpo_preto = pygame.image.load('c_corpo_preto.png')
-snake_cauda_verm = pygame.image.load('c_cauda_verm.png')
-snake_cauda_preto = pygame.image.load('c_cauda_preto.png')
 
 # snake_skin = pygame.Surface((32,32))
 # snake_skin.fill((255,0,255)) #White
@@ -191,7 +189,7 @@ while not game_over:
         scorejapao = SCOREP1
         scorealemanha = SCOREP2
         scoreargentina = SCOREP3
-        fundo = fundo1
+        fundo = fundo3
     elif score >= 45:
         P1 = jupterimg
         P2 = marteimg
@@ -202,7 +200,7 @@ while not game_over:
         scorejupter = SCOREP1
         scoremarte = SCOREP2
         scoresaturno = SCOREP3
-        fundo = fundo2
+        fundo = fundo4
 
     if score == 15 :
         SCOREP1 = 0
