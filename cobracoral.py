@@ -194,15 +194,15 @@ while not game_over:
     if score == 15 :
         SCOREP1 = 0
         SCOREP2 = 0
-        SCOREP2 = 0
+        SCOREP3 = 0
     elif score == 30 :
         SCOREP1 = 0
         SCOREP2 = 0
-        SCOREP2 = 0
+        SCOREP3 = 0
     elif score == 45:
         SCOREP1 = 0
         SCOREP2 = 0
-        SCOREP2 = 0
+        SCOREP3 = 0
 
 
     #esse bloco de comando detecta se a colisao com a 'maçã' e adiciona uma nova parte onde era a 'maçã' e redireciona a 'maçã' para umanova posiçao e adiciona a pontuaçao 1
