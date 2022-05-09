@@ -10,7 +10,7 @@ fundo1 = pygame.image.load('campo.jpg')
 fundo2 = pygame.image.load('campo.png')
 fundo3 = pygame.image.load('campo.png')
 fundo4 = pygame.image.load('campo.png')
-SANTAIMG = pygame.image.load('i_nautico.png')
+NAUTICOIMG = pygame.image.load('i_nautico.png')
 SPORTIMG = pygame.image.load('i_sport.png')
 SALGUEIROIMG = pygame.image.load('i_salgueiro.png')
 cobracabeca = pygame.image.load('cabecacobra.png')
@@ -72,8 +72,8 @@ snake_cauda_preto = pygame.image.load('c_cauda_preto.png')
 #primeiro é escohlido uma posiçao para a 'maçã' usando a função
 P1_pos = on_grid_random()
 # a skin tem que ser umaimagem 32x que vai ser o tanho real do objerto para a colisão funcianar corretamente
-P1 = SANTAIMG
-P1MOSTRADOR = SANTAIMG
+P1 = NAUTICOIMG
+P1MOSTRADOR = NAUTICOIMG
 # (Pergunta: pq foi criada uma variável cópia da img? não seria mais simples só usar a própria img dos times já que não vamos modificá-las) - Pedro
 
 #define uma das "maçãs" que são um dos times
@@ -107,10 +107,10 @@ score = 0
 SCOREP1 = 0
 SCOREP2 = 0
 SCOREP3 = 0
-scoresanta = 0
-scoresporte = 0
+scorenautico = 0
+scoresport = 0
 scoresalgueiro = 0
-scoreflamenfo = 0 
+scoreflamengo = 0 
 scorecorintia = 0 
 scorepalmeiras = 0
 scorejapao = 0
@@ -120,12 +120,23 @@ scorejupter = 0
 scoremarte = 0
 scoresaturno = 0 
 
-#(para começar a fazer depois:)
-#score_sport = 0
-#score_salgueiro = 0
-#score_nautico = 0   -> (lembrando que a gnt vai trocar o santa cruz pelo nautico)
+def pontuacao_na_tela(imagem, score_time, posicao):
+    posicao = (5+posicao)*32
+    screen.blit(imagem,(816,posicao))
+    score_font = font.render('Score: %s' % (score_time), True, (255, 255, 255))
+    score_rect = score_font.get_rect()
+    score_rect.topleft = (950 - 100, 6 + posicao)
+    screen.blit(score_font, score_rect)
 
-# variave responsavel para que o jogo nao feche apos um unico update
+def pontuacao_estagio(SCOREPX, posicao):
+    # atualiza o score, pega a fonte e atualiza na tela (para não ficar estatico)
+    score_font = font.render('Score: %s' % (SCOREPX), True, (255, 255, 255))
+    score_rect = score_font.get_rect()
+    #ajustar entre (950-120 a posiçao do texto)
+    score_rect.topleft = (950 - 100, posicao)
+    screen.blit(score_font, score_rect)
+
+# variavel responsavel para que o jogo nao feche apos um unico update
 game_over = False
 # esse while fica rodando grantido que o jogo continue rodando
 while not game_over:
@@ -156,8 +167,8 @@ while not game_over:
 
     #TROCA DE IMG TESTE
     if score < 15:
-        scoresanta = SCOREP1
-        scoresporte = SCOREP2
+        scorenautico = SCOREP1
+        scoresport = SCOREP2
         scoresalgueiro = SCOREP3
     elif score >= 15 and score < 30:
         P1 = flamengoimg
@@ -166,7 +177,7 @@ while not game_over:
         P1MOSTRADOR = flamengoimg
         P2MOSTRADOR = corintiansimg
         P3MOSTRADOR = palmeirasimg
-        scoreflamenfo = SCOREP1
+        scoreflamengo = SCOREP1
         scorecorintia = SCOREP2
         scorepalmeiras = SCOREP3
         fundo = fundo2
@@ -267,81 +278,24 @@ while not game_over:
     screen.blit(P3MOSTRADOR,(816,128))
 
     for i in range(1):
-        screen.blit(SANTAIMG,(816,32*6))
-
-        score_fontsanta = font.render('Score: %s' % (scoresanta), True, (255, 255, 255))
-        score_rectsanta = score_fontsanta.get_rect()
-        score_rectsanta.topleft = (950 - 100, 6 + 32*6)
-        screen.blit(score_fontsanta, score_rectsanta)
-
-        screen.blit(SPORTIMG,(816,32*7))
-        score_fontsport= font.render('Score: %s' % (scoresporte), True, (255, 255, 255))
-        score_rectsport = score_fontsport.get_rect()
-        score_rectsport.topleft = (950 - 100,6 +  32*7)
-        screen.blit(score_fontsport, score_rectsport)
-
-        screen.blit(SALGUEIROIMG,(816,32*8))
-        score_fontsalgueiro= font.render('Score: %s' % (scoresalgueiro), True, (255, 255, 255))
-        score_rectsalgueiro = score_fontsalgueiro.get_rect()
-        score_rectsalgueiro.topleft = (950 - 100,6 +  32*8)
-        screen.blit(score_fontsalgueiro, score_rectsalgueiro)
+        pontuacao_na_tela(NAUTICOIMG, scorenautico, 1) # nautico é o mais em cima
+        pontuacao_na_tela(SPORTIMG, scoresport, 2) # sport vem depois
+        pontuacao_na_tela(SALGUEIROIMG, scoresalgueiro, 3) # salgueiro é o 3o
 
         if score > 15:
-            screen.blit(flamengoimg,(816,32*9))
-            score_fontflamenfo = font.render('Score: %s' % (scoreflamenfo), True, (255, 255, 255))
-            score_rectflamenfo = score_fontflamenfo.get_rect()
-            score_rectflamenfo.topleft = (950 - 100, 6 + 32*9)
-            screen.blit(score_fontflamenfo, score_rectflamenfo)
-
-            screen.blit(corintiansimg,(816,32*10))
-            score_fontcorintia = font.render('Score: %s' % (scorecorintia), True, (255, 255, 255))
-            score_rectcorintia = score_fontcorintia.get_rect()
-            score_rectcorintia.topleft = (950 - 100, 6 + 32*10)
-            screen.blit(score_fontcorintia, score_rectcorintia)
-
-            screen.blit(palmeirasimg,(816,32*11))
-            score_fontpalmeiras = font.render('Score: %s' % (scorepalmeiras), True, (255, 255, 255))
-            score_rectpalmeiras = score_fontpalmeiras.get_rect()
-            score_rectpalmeiras.topleft = (950 - 100,6 +  32*11)
-            screen.blit(score_fontpalmeiras, score_rectpalmeiras)
+            pontuacao_na_tela(flamengoimg, scoreflamengo, 4) # flamengo é o 4o
+            pontuacao_na_tela(corintiansimg, scorecorintia, 5) # corinthians é o 5o
+            pontuacao_na_tela(palmeirasimg, scorepalmeiras, 6) # palmeiras é o 6o
 
         if score > 30:
-            screen.blit(japaoimg,(816,32*12))
-            score_fontjapao = font.render('Score: %s' % (scorejapao), True, (255, 255, 255))
-            score_rectjapao = score_fontjapao.get_rect()
-            score_rectjapao.topleft = (950 - 100,6 +  32*12)
-            screen.blit(score_fontjapao, score_rectjapao)
-
-            screen.blit(alemanhaimg,(816,32*13))
-            score_fontalemanha = font.render('Score: %s' % (scorealemanha), True, (255, 255, 255))
-            score_rectalemanha = score_fontalemanha.get_rect()
-            score_rectalemanha.topleft = (950 - 100, 6 + 32*13)
-            screen.blit(score_fontalemanha, score_rectalemanha)
-
-            screen.blit(argentinaimg,(816,32*14))
-            score_fontargentina = font.render('Score: %s' % (scoreargentina), True, (255, 255, 255))
-            score_rectargentina = score_fontargentina.get_rect()
-            score_rectargentina.topleft = (950 - 100,6 +  32*14)
-            screen.blit(score_fontargentina, score_rectargentina)
+            pontuacao_na_tela(japaoimg, scorejapao, 7) # japao é o 7o
+            pontuacao_na_tela(alemanhaimg, scorealemanha, 8) # alemanha é o 8o
+            pontuacao_na_tela(argentinaimg, scoreargentina, 9) # argentina é o 9o
 
         if score > 45:
-            screen.blit(jupterimg,(816,32*15))
-            score_fontjupter = font.render('Score: %s' % (scorejupter), True, (255, 255, 255))
-            score_rectjupter = score_fontjupter.get_rect()
-            score_rectjupter.topleft = (950 - 100,6 +  32*15)
-            screen.blit(score_fontjupter, score_rectjupter)
-
-            screen.blit(marteimg,(816,32*16))
-            score_fontmarte = font.render('Score: %s' % (scoremarte), True, (255, 255, 255))
-            score_rectmarte = score_fontmarte.get_rect()
-            score_rectmarte.topleft = (950 - 100,6 +  32*16)
-            screen.blit(score_fontmarte, score_rectmarte)
-
-            screen.blit(saturnoimg,(816,32*17))
-            score_fontsaturno = font.render('Score: %s' % (scoresaturno), True, (255, 255, 255))
-            score_rectsaturno = score_fontsaturno.get_rect()
-            score_rectsaturno.topleft = (950 - 100,6 +  32*17)
-            screen.blit(score_fontsaturno, score_rectsaturno)
+            pontuacao_na_tela(jupterimg, scorejupter, 10) # jupiter vem em 10o
+            pontuacao_na_tela(marteimg, scoremarte, 11) # marte vem em 11o
+            pontuacao_na_tela(saturnoimg, scoresaturno, 12) # e saturno é o último, em 12o de cima para baixo
 
     #marca (desenha) as linhas 
     for x in range(0, 800, 32): # horizontal lines
@@ -350,33 +304,11 @@ while not game_over:
         pygame.draw.line(screen, (40, 40, 40), (0, y), (800, y))
 
 
-    # atualiza o score, pega a fonte e atualiza na tela (para não ficar estatico)
-    score_font = font.render('Score Total: %s' % (score), True, (255, 255, 255))
-    score_rect = score_font.get_rect()
-    #ajustar entre (950-120 a posiçao do texto)
-    score_rect.topleft = (950 - 142, 10)
-    screen.blit(score_font, score_rect)
-
-        # atualiza o score, pega a fonte e atualiza na tela (para não ficar estatico)
-    score_fontP1 = font.render('Score: %s' % (SCOREP1), True, (255, 255, 255))
-    score_rectP1 = score_fontP1.get_rect()
-    #ajustar entre (950-120 a posiçao do texto)
-    score_rectP1.topleft = (950 - 100, 72)
-    screen.blit(score_fontP1, score_rectP1)
-
-    # atualiza o score, pega a fonte e atualiza na tela (para não ficar estatico)
-    score_fontP2 = font.render('Score: %s' % (SCOREP2), True, (255, 255, 255))
-    score_rectP2 = score_fontP2.get_rect()
-    #ajustar entre (950-120 a posiçao do texto)
-    score_rectP2.topleft = (950 - 100, 102)
-    screen.blit(score_fontP2, score_rectP2)
-
-    # atualiza o score, pega a fonte e atualiza na tela (para não ficar estatico)
-    score_fontP3 = font.render('Score: %s' % (SCOREP3), True, (255, 255, 255))
-    score_rectP3 = score_fontP3.get_rect()
-    #ajustar entre (950-120 a posiçao do texto)
-    score_rectP3.topleft = (950 - 100, 142)
-    screen.blit(score_fontP3, score_rectP3)
+    # essas vão ser as pontuações específicas para os times dos estágios
+    pontuacao_estagio(score, 10) # geral
+    pontuacao_estagio(SCOREP1, 72) # time 1
+    pontuacao_estagio(SCOREP2, 102) # time 2
+    pontuacao_estagio(SCOREP3, 142) # time 3
 
     # atualiza a posiçãode cada pedaço da cobra na tela
     for pedaco in snake:
