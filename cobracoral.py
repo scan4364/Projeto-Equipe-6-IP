@@ -8,6 +8,8 @@ from pygame.locals import *
 #IMAGENS IMPORT
 fundo1 = pygame.image.load('campo.jpg')
 fundo2 = pygame.image.load('campo.png')
+fundo3 = pygame.image.load('campo.png')
+fundo4 = pygame.image.load('campo.png')
 SANTAIMG = pygame.image.load('i_nautico.png')
 SPORTIMG = pygame.image.load('i_sport.png')
 SALGUEIROIMG = pygame.image.load('i_salgueiro.png')
@@ -153,11 +155,11 @@ while not game_over:
                 snake_head = rotacao(cobracabeca, 0)
 
     #TROCA DE IMG TESTE
-    if score <= 15:
+    if score < 15:
         scoresanta = SCOREP1
         scoresporte = SCOREP2
         scoresalgueiro = SCOREP3
-    elif score > 15 and score <= 30:
+    elif score >= 15 and score < 30:
         P1 = flamengoimg
         P2 = corintiansimg
         P3 = palmeirasimg
@@ -168,7 +170,7 @@ while not game_over:
         scorecorintia = SCOREP2
         scorepalmeiras = SCOREP3
         fundo = fundo2
-    elif score > 30 and score <= 45:
+    elif score >= 30 and score < 45:
         P1 = japaoimg
         P2 = alemanhaimg
         P3 = argentinaimg
@@ -179,7 +181,7 @@ while not game_over:
         scorealemanha = SCOREP2
         scoreargentina = SCOREP3
         fundo = fundo1
-    elif score > 45:
+    elif score >= 45:
         P1 = jupterimg
         P2 = marteimg
         P3 = saturnoimg
@@ -341,9 +343,6 @@ while not game_over:
             score_rectsaturno.topleft = (950 - 100,6 +  32*17)
             screen.blit(score_fontsaturno, score_rectsaturno)
 
-        
-
-    
     #marca (desenha) as linhas 
     for x in range(0, 800, 32): # horizontal lines
         pygame.draw.line(screen, (40, 40, 40), (x, 0), (x, 800))
