@@ -35,6 +35,22 @@ snake_cauda_preto = pygame.image.load('imagens/cobra/c_cauda_preto.png')
 #telas
 start_img = pygame.image.load('imagens/telas/santa_ascends950.png')
 dead_img = pygame.image.load('imagens/telas/santa_dies_950.png')
+#falta tela de creditos
+
+pygame.mixer.init(22050,-16,2,2048)
+#sons
+pygame.mixer.music.load('sons/hinosanta_fixed.wav')
+pygame.mixer.music.play(-1)
+son_playecomida = pygame.mixer.Sound('sons/Pickup_Coin4.wav')
+son_upgrade = pygame.mixer.Sound('sons/Powerup10.wav')
+son_morte = pygame.mixer.Sound('sons/Hit_Hurt6.wav')
+
+#tocou é variuaveis bool que impede que o son repita infiniramente
+tocou1 = False
+tocou2 = False
+tocou3 = False
+
+
 
 #fundo variavel e fundo1 2 3 4 moveis
 fundo = fundo1
@@ -173,11 +189,11 @@ while not play_game:
     screen.fill((0,100,0))
     screen.blit(start_img,(0,0))
 
-    game_over_font3 = pygame.font.Font('freesansbold.ttf', 15)
-    game_over_screen3 = game_over_font3.render('Click na tela para Jogar!', True, (255, 255, 255))
-    game_over_rect3 = game_over_screen3.get_rect()
-    game_over_rect3.midtop = (950 / 2, 550)
-    screen.blit(game_over_screen3, game_over_rect3)
+    game_star_font3 = pygame.font.Font('freesansbold.ttf', 15)
+    game_star_screen3 = game_star_font3.render('Click na tela para Jogar!', True, (255, 255, 255))
+    game_star_rect3 = game_star_screen3.get_rect()
+    game_star_rect3.midtop = (950 / 2, 550)
+    screen.blit(game_star_screen3, game_star_rect3)
 
     pressed_Keys = pygame.mouse.get_pressed()
     if (pressed_Keys[0]):
@@ -257,14 +273,23 @@ while not game_over:
         SCOREP1 = 0
         SCOREP2 = 0
         SCOREP3 = 0
+        if tocou1 == False:
+            son_upgrade.play()
+            tocou1 = True
     elif score == 30 :
         SCOREP1 = 0
         SCOREP2 = 0
         SCOREP3 = 0
+        if tocou2 == False:
+            son_upgrade.play()
+            tocou2 = True
     elif score == 45:
         SCOREP1 = 0
         SCOREP2 = 0
         SCOREP3 = 0
+        if tocou3 == False:
+            son_upgrade.play()
+            tocou3 = True
 
 
     #esse bloco de comando detecta se a colisao com a 'maçã' e adiciona uma nova parte onde era a 'maçã' e redireciona a 'maçã' para umanova posiçao e adiciona a pontuaçao 1
@@ -273,6 +298,7 @@ while not game_over:
         snake.append((0,0))
         score = score + 1
         SCOREP1 = SCOREP1 +1
+        son_playecomida.play()
 
     #esse bloco de comando detecta se a colisao com a 'maçã' e adiciona uma nova parte onde era a 'maçã' e redireciona a 'maçã' para umanova posiçao e adiciona a pontuaçao 1
     if collision(snake[0], P2_pos):
@@ -280,6 +306,7 @@ while not game_over:
         snake.append((0,0))
         score = score + 1
         SCOREP2 = SCOREP2 +1
+        son_playecomida.play()
 
     #esse bloco de comando detecta se a colisao com a 'maçã' e adiciona uma nova parte onde era a 'maçã' e redireciona a 'maçã' para umanova posiçao e adiciona a pontuaçao 1
     if collision(snake[0], P3_pos):
@@ -287,20 +314,24 @@ while not game_over:
         snake.append((0,0))
         score = score + 1
         SCOREP3 = SCOREP3 +1
+        son_playecomida.play()
 
     # Checa se a snake colidiu com a bordas
     if snake[0][0] == 800 or snake[0][1] == 608 or snake[0][0] < 0 or snake[0][1] < 0:
         #aki entra o son de perdeu
+        son_morte.play()
         game_over = True
         break
     # Checa se a cobra colidiu com ele mesma com um for
     for i in range(1, len(snake) - 1):
         if snake[0][0] == snake[i][0] and snake[0][1] == snake[i][1]:
+            son_morte.play()
             game_over = True
             #aki entra o son de perdeu
             break
 
     if game_over:
+        son_morte.play()
         break
     
     for i in range(len(snake) - 1, 0, -1):
