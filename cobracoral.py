@@ -134,6 +134,48 @@ def pontuacao_estagio(SCOREPX, posicao):
     score_rect.topleft = (950 - 100, posicao)
     screen.blit(score_font, score_rect)
 
+# class Button(pygame.sprite.Sprite):
+#     def __init__(self, *groups: AbstractGroup) -> None:
+#         super().__init__(*groups)
+
+#     def __init__(self,x,y,image):
+#         self.image = image
+#         self.rect = self.image.get_rect()
+#         self.rect.topleft = (x,y)
+
+#     def draw(self):
+#         screen.blit(self.image,(x,y))
+
+# start_img = pygame.image.load('imagens/times/i_jupiter.png')
+# start_bnt = Button(100,100,start_img)
+
+
+play_game = False
+while not play_game:
+
+
+    # start_bnt.draw
+    # screen.blit(start_img,(100,0))
+        #limitador do fps, colocamos aki o fps(tavz uma variavel funcione)-- porem se a variavel ficar almentando e diminuindo tem que colocar um limite max e min
+    
+
+
+    #esse for garante que que o jogo não feche enquanto não apertamos o X ou se apertamos o X ele vai fechar
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            exit()
+    
+    clock.tick(10)
+    screen.fill((0,100,0))
+    screen.blit(fundo,(0,0))
+
+    pressed_Keys = pygame.mouse.get_pressed()
+    if (pressed_Keys[0]):
+        play_game = True
+
+    pygame.display.update()
+
 # variavel responsavel para que o jogo nao feche apos um unico update
 game_over = False
 # esse while fica rodando grantido que o jogo continue rodando
