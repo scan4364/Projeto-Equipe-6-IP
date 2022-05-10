@@ -32,6 +32,9 @@ snake_corpo_verm = pygame.image.load('imagens/cobra/c_corpo_verm.png')
 snake_corpo_preto = pygame.image.load('imagens/cobra/c_corpo_preto.png')
 snake_cauda_verm = pygame.image.load('imagens/cobra/c_cauda_verm.png')
 snake_cauda_preto = pygame.image.load('imagens/cobra/c_cauda_preto.png')
+#telas
+start_img = pygame.image.load('imagens/telas/santa_ascends950.png')
+dead_img = pygame.image.load('imagens/telas/santa_dies_950.png')
 
 #fundo variavel e fundo1 2 3 4 moveis
 fundo = fundo1
@@ -168,7 +171,13 @@ while not play_game:
     
     clock.tick(10)
     screen.fill((0,100,0))
-    screen.blit(fundo,(0,0))
+    screen.blit(start_img,(0,0))
+
+    game_over_font3 = pygame.font.Font('freesansbold.ttf', 15)
+    game_over_screen3 = game_over_font3.render('Click na tela para Jogar!', True, (255, 255, 255))
+    game_over_rect3 = game_over_screen3.get_rect()
+    game_over_rect3.midtop = (950 / 2, 550)
+    screen.blit(game_over_screen3, game_over_rect3)
 
     pressed_Keys = pygame.mouse.get_pressed()
     if (pressed_Keys[0]):
@@ -372,17 +381,45 @@ while not game_over:
     pygame.display.update()
 
 # quando aquele while acabar vaintar eternamente nesse while de game over
-while True:
-    #define uma fonte para o texto de game over, local de spw, oq vai ser escrito, e tempo de espera ate a tela fechar
-    game_over_font = pygame.font.Font('freesansbold.ttf', 45)
+# while True:
+#     #define uma fonte para o texto de game over, local de spw, oq vai ser escrito, e tempo de espera ate a tela fechar
+#     game_over_font = pygame.font.Font('freesansbold.ttf', 45)
+#     game_over_screen = game_over_font.render('Santinha foi para serie D', True, (255, 255, 255))
+#     game_over_rect = game_over_screen.get_rect()
+#     game_over_rect.midtop = (800 / 2, 100)
+#     screen.blit(game_over_screen, game_over_rect)
+#     pygame.display.update()
+#     pygame.time.wait(500)
+#     while True:
+#         for event in pygame.event.get():
+#             if event.type == QUIT:
+#                 pygame.quit()
+#                 exit()
+
+game_over_bl = True
+while game_over_bl == True:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            exit()
+    
+    clock.tick(10)
+    screen.fill((0,100,0))
+    screen.blit(dead_img,(0,0))
+    game_over_font = pygame.font.Font('freesansbold.ttf', 35)
     game_over_screen = game_over_font.render('Santinha foi para serie D', True, (255, 255, 255))
     game_over_rect = game_over_screen.get_rect()
-    game_over_rect.midtop = (800 / 2, 100)
+    game_over_rect.midtop = (950 / 2, 500)
     screen.blit(game_over_screen, game_over_rect)
+
+    game_over_font2 = pygame.font.Font('freesansbold.ttf', 15)
+    game_over_screen2 = game_over_font2.render('Click na tela para fechar o jogo', True, (255, 255, 255))
+    game_over_rect2 = game_over_screen2.get_rect()
+    game_over_rect2.midtop = (950 / 2, 550)
+    screen.blit(game_over_screen2, game_over_rect2)
+
+    pressed_Keys = pygame.mouse.get_pressed()
+    if (pressed_Keys[0]):
+        game_over_bl = False
+
     pygame.display.update()
-    pygame.time.wait(500)
-    while True:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                exit()
