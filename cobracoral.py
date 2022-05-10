@@ -7,8 +7,8 @@ from pygame.locals import *
 #Campos:
 fundo1 = pygame.image.load('imagens/campos/campo_nordeste.png')
 fundo2 = pygame.image.load('imagens/campos/campo_brasileirao.png')
-fundo3 = pygame.image.load('imagens/campos/campo2.png')
-fundo4 = pygame.image.load('imagens/campos/campo2.png')
+fundo3 = pygame.image.load('imagens/campos/campo 3.png')
+fundo4 = pygame.image.load('imagens/campos/campo 4.png')
 #Times:
 NAUTICOIMG = pygame.image.load('imagens/times/i_nautico.png')
 SPORTIMG = pygame.image.load('imagens/times/i_sport.png')
