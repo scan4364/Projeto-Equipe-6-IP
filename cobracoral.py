@@ -1,5 +1,5 @@
-from re import A
-from turtle import Screen
+# from re import A
+# from turtle import Screen
 import pygame, random
 from pygame.locals import *
 
@@ -35,6 +35,7 @@ snake_cauda_preto = pygame.image.load('imagens/cobra/c_cauda_preto.png')
 #telas
 start_img = pygame.image.load('imagens/telas/santa_ascends950.png')
 dead_img = pygame.image.load('imagens/telas/santa_dies_950.png')
+creditos_img = pygame.image.load('imagens/telas/santa_creditos.png')
 #falta tela de creditos
 
 pygame.mixer.init(22050,-16,2,2048)
@@ -443,14 +444,38 @@ while game_over_bl == True:
     game_over_rect.midtop = (950 / 2, 500)
     screen.blit(game_over_screen, game_over_rect)
 
-    game_over_font2 = pygame.font.Font('freesansbold.ttf', 15)
-    game_over_screen2 = game_over_font2.render('Click na tela para fechar o jogo', True, (255, 255, 255))
-    game_over_rect2 = game_over_screen2.get_rect()
-    game_over_rect2.midtop = (950 / 2, 550)
-    screen.blit(game_over_screen2, game_over_rect2)
+    game_next_font2 = pygame.font.Font('freesansbold.ttf', 15)
+    game_next_screen2 = game_next_font2.render('Click na tela para abrir os créditos', True, (255, 255, 255))
+    game_next_rect2 = game_next_screen2.get_rect()
+    game_next_rect2.midtop = (950 / 2, 550)
+    screen.blit(game_next_screen2, game_next_rect2)
 
     pressed_Keys = pygame.mouse.get_pressed()
     if (pressed_Keys[0]):
         game_over_bl = False
 
     pygame.display.update()
+
+creditos_bl = True
+while creditos_bl == True:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            exit()
+    
+    clock.tick(10)
+    screen.fill((0,100,0))
+    screen.blit(creditos_img,(0,0))
+
+    game_over_font2 = pygame.font.Font('freesansbold.ttf', 15)
+    game_over_screen2 = game_over_font2.render('Click na tela para fechar o jogo', True, (255, 255, 255))
+    game_over_rect2 = game_over_screen2.get_rect()
+    game_over_rect2.midtop = (950 / 2, 550)
+    screen.blit(game_over_screen2, game_over_rect2)
+    
+    pressed_Keys = pygame.mouse.get_pressed()
+    if (pressed_Keys[0]):
+        creditos_bl = False
+
+    pygame.display.update()
+
