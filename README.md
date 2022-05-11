@@ -5,5 +5,5 @@ REQUESITOS: IDE PYTHON (VS CODE)
 1 - ABRIR CMD
 2 - COLAR CODIGO - py -m pip install -U pygame --user
 3 - ESPERAR TERMINO DA INSTALAÇÃO
-4 - ABRIR NA IDE O ARQUIVO "main"
-5 - RODAR NO MAIN 
+4 - ABRIR NA IDE O ARQUIVO "main.py"
+5 - RODAR NO "main.py"
