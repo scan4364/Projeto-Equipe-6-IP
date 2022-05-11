@@ -1,5 +1,3 @@
-# from re import A
-# from turtle import Screen
 import pygame, random
 from pygame.locals import *
 from classes import *
@@ -7,8 +5,8 @@ from funcoes import *
 
 pygame.display.set_caption('Santa Ascends')
 
-snake = Cobra()
-snake_head = snake.cabeca
+snake = [cabeca, corpo1, cauda]
+snake_head = cabeca.sprite
 
 #IMAGENS IMPORT
 #telas
@@ -91,16 +89,16 @@ while not game_over:
         if event.type == KEYDOWN:
             if event.key == K_UP and my_direction != DOWN: # se cima apertou e a cobra não esta indo pra baixo
                 my_direction = UP
-                pygame.transform.rotate(snake.cabeca, 90)
+                snake_head = rotacao(cabeca.sprite, 90)
             if event.key == K_DOWN and my_direction != UP:
                 my_direction = DOWN
-                pygame.transform.rotate(snake.cabeca, -90)
+                snake_head = rotacao(cabeca.sprite, -90)
             if event.key == K_LEFT and my_direction != RIGHT:
                 my_direction = LEFT
-                pygame.transform.rotate(snake.cabeca, 180)
+                snake_head = rotacao(cabeca.sprite, 180)
             if event.key == K_RIGHT and my_direction != LEFT:
                 my_direction = RIGHT
-                pygame.transform.rotate(snake.cabeca, 0)
+                snake_head = rotacao(cabeca.sprite, 0)
 
     #TROCA DE IMG TESTE
     if score < 15:
@@ -134,38 +132,44 @@ while not game_over:
             tocou3 = True
 
     #esse bloco de comando detecta se a colisao com a 'maçã' e adiciona uma nova parte onde era a 'maçã' e redireciona a 'maçã' para umanova posiçao e adiciona a pontuaçao 1
-    if collision(snake.corpo[0], time1_pos): # -> snake.corpo[0] = coordenada do primeiro pedaço da cobra, que é a cabeça
+    if (cabeca.posicao == time1_pos): # -> snake.corpo[0] = coordenada do primeiro pedaço da cobra, que é a cabeça
         time1_pos = on_grid_random()
-        snake.corpo.append((0,0))
-        score += 1 
         time1.adicionar_um()
+        novo_pedaco = Cobra(-32, -32, novo_sprite(snake[-1]))
+        snake.insert(-1, novo_pedaco)
+        snake[-1].sprite = nova_cor(snake[-1])
+        score += 1 
         son_playecomida.play()
 
     #esse bloco de comando detecta se a colisao com a 'maçã' e adiciona uma nova parte onde era a 'maçã' e redireciona a 'maçã' para umanova posiçao e adiciona a pontuaçao 1
-    if collision(snake.corpo[0], time2_pos):
+    if(cabeca.posicao == time2_pos):
         time2_pos = on_grid_random()
-        snake.corpo.append((0,0))
+        novo_pedaco = Cobra(-32, -32, novo_sprite(snake[-1]))
+        snake.insert(-1, novo_pedaco)
+        snake[-1].sprite = nova_cor(snake[-1])
         score += 1
         time2.adicionar_um()
         son_playecomida.play()
-
+        
     #esse bloco de comando detecta se a colisao com a 'maçã' e adiciona uma nova parte onde era a 'maçã' e redireciona a 'maçã' para umanova posiçao e adiciona a pontuaçao 1
-    if collision(snake.corpo[0], time3_pos):
+    if(cabeca.posicao == time3_pos):
         time3_pos = on_grid_random()
-        snake.corpo.append((0,0))
+        novo_pedaco = Cobra(-32, -32, novo_sprite(snake[-1]))
+        snake.insert(-1, novo_pedaco)
+        snake[-1].sprite = nova_cor(snake[-1])
         score += 1
         time3.adicionar_um()
         son_playecomida.play()
 
     # Checa se a snake.corpo colidiu com a bordas
-    if snake.corpo[0][0] == 800 or snake.corpo[0][1] == 608 or snake.corpo[0][0] < 0 or snake.corpo[0][1] < 0:
+    if cabeca.posicaoX == 800 or cabeca.posicaoY == 608 or cabeca.posicaoX < 0 or cabeca.posicaoY < 0:
         #aki entra o son de perdeu
         son_morte.play()
         game_over = True
         break
     # Checa se a cobra colidiu com ele mesma com um for
-    for i in range(1, len(snake.corpo) - 1):
-        if snake.corpo[0][0] == snake.corpo[i][0] and snake.corpo[0][1] == snake.corpo[i][1]:
+    for i in range(1, len(snake) - 1):
+        if cabeca.posicao == snake[i].posicao:
             son_morte.play()
             game_over = True
             #aki entra o son de perdeu
@@ -175,18 +179,19 @@ while not game_over:
         son_morte.play()
         break
     
-    for i in range(len(snake.corpo) - 1, 0, -1):
-        snake.corpo[i] = (snake.corpo[i-1][0], snake.corpo[i-1][1])
+    # cada pedaço vai tomar a posição do pedaço em sua frente, isso acontece do último pedaço até o segundo pedaço
+    for i in range(len(snake) - 1, 0, -1):
+        snake[i].update_pos(snake[i-1].posicaoX, snake[i-1].posicaoY)
         
-    # o codigo que de fato faz a cobra se mover
+    # o codigo que de fato faz a cobra se mover (no caso vai mover a cabeça em si, o primeiro pedaço e essa vai guiar os próximos)
     if my_direction == UP:
-        snake.corpo[0] = (snake.corpo[0][0], snake.corpo[0][1] - 32) # -> snake.corpo[0] = (x, y)
+        cabeca.update_pos(cabeca.posicaoX, cabeca.posicaoY -32)
     if my_direction == DOWN:
-        snake.corpo[0] = (snake.corpo[0][0], snake.corpo[0][1] + 32)
+        cabeca.update_pos(cabeca.posicaoX, cabeca.posicaoY +32)
     if my_direction == RIGHT:
-        snake.corpo[0] = (snake.corpo[0][0] + 32, snake.corpo[0][1])
+        cabeca.update_pos(cabeca.posicaoX +32, cabeca.posicaoY)
     if my_direction == LEFT:
-        snake.corpo[0] = (snake.corpo[0][0] - 32, snake.corpo[0][1])
+        cabeca.update_pos(cabeca.posicaoX -32, cabeca.posicaoY)
     
     #atualização da tela
     screen.fill((0,100,0))
@@ -231,25 +236,15 @@ while not game_over:
     pontuacao_estagio(time2.pontos, 102) # time 2
     pontuacao_estagio(time3.pontos, 142) # time 3
 
-    # atualiza a posiçãode cada pedaço da cobra na tela
-    for pedaco in snake.corpo:
-    #cabeça da cobra
-        if snake.corpo.index(pedaco) == 0:
-            screen.blit(snake_head, pedaco)
-        #cauda da cobra tamanho
-        elif snake.corpo.index(pedaco) == len(snake.corpo) - 1:
-            #a cor da cauda muda de acordo com o tamanho da cobra
-            if len(snake.corpo)%2 == 1:
-                screen.blit(snake.cauda_preto, pedaco)
-            else:
-                screen.blit(snake.cauda_verm, pedaco)
-    #corpo da cobra que recebe vermelho nas posições impares e preto nas pares (cabeça é 0)
-        elif snake.corpo.index(pedaco)%2 != 0:
-            screen.blit(snake.corpo_verm, pedaco)
+    # atualiza a posição de cada pedaço do corpo na tela
+    for pedaco in snake:
+        if(pedaco == cabeca):
+            screen.blit(snake_head, cabeca.posicao)
         else:
-            screen.blit(snake.corpo_preto, pedaco) 
+            screen.blit(pedaco.sprite, pedaco.posicao)
 
-    #comando mais importante o de update da tele, garante que ao final do grande while e vonsiga mostrar tudo que aconteu na tela
+    # comando mais importante o de update da tele, 
+    # garante que ao final do grande while eel consiga mostrar tudo que aconteu na tela
     pygame.display.update()
 
 game_over_bl = True

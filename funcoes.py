@@ -1,3 +1,4 @@
+import random
 from declaracoes import *
 from classes import *
 
@@ -14,8 +15,25 @@ def rotacao(img, angulo):
     return img_rotacionada
 
 #função que analisa se ha colisaão de objetos
-def collision(c1, c2):
-    return (c1[0] == c2[0]) and (c1[1] == c2[1])
+#def colisao(cobra_lista: list):
+#    novo_pedaco = Cobra(-32, -32, novo_sprite(cobra_lista[-1]))
+#    cobra_lista.insert(-1, novo_pedaco)
+#    cobra_lista[-1].sprite = nova_cor(cobra_lista[-1])
+#    score += 1 
+#    son_playecomida.play()
+
+def nova_cor(rabo):
+    if(rabo.sprite == cauda_preto_img):
+        return cauda_verm_img
+    elif(rabo.sprite == cauda_verm_img):
+        return cauda_preto_img
+
+def novo_sprite(rabo):
+    if(rabo.sprite == cauda_preto_img):
+        sprite = corpo_preto_img
+    elif(rabo.sprite == cauda_verm_img):
+        sprite = corpo_verm_img
+    return sprite
 
 def pontuacao_estagio(SCOREPX, posicao):
     # atualiza o score, pega a fonte e atualiza na tela (para não ficar estatico)

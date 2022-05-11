@@ -1,4 +1,4 @@
-import pygame, random
+import pygame
 from pygame.locals import *
 
 pygame.init()
@@ -21,3 +21,8 @@ son_playecomida = pygame.mixer.Sound('sons/Pickup_Coin4.wav')
 son_upgrade = pygame.mixer.Sound('sons/Powerup10.wav')
 son_morte = pygame.mixer.Sound('sons/Hit_Hurt6.wav')
 
+cabeca_img = pygame.image.load('imagens/cobra/cabecacobra.png')
+corpo_verm_img = pygame.image.load('imagens/cobra/c_corpo_verm.png')
+corpo_preto_img = pygame.image.load('imagens/cobra/c_corpo_preto.png')
+cauda_preto_img = pygame.image.load('imagens/cobra/c_cauda_preto.png')
+cauda_verm_img = pygame.image.load('imagens/cobra/c_cauda_verm.png')

@@ -17,7 +17,6 @@ class time(object):
         score_rect.topleft = (950 - 100, 6 + posicao)
         screen.blit(score_font, score_rect)
 
-
 nautico = time(pygame.image.load('imagens/times/i_nautico.png'))
 sport = time(pygame.image.load('imagens/times/i_sport.png'))
 salgueiro = time(pygame.image.load('imagens/times/i_salgueiro.png'))
@@ -31,13 +30,27 @@ marte = time(pygame.image.load('imagens/times/i_marte.png'))
 jupiter = time(pygame.image.load('imagens/times/i_jupiter.png'))
 saturno = time(pygame.image.load('imagens/times/i_saturn.png'))
 
-class Cobra:
-    def __init__(self):
+# Pedaços da cobra
+class Cobra(object):
+    def __init__(self, x, y, imagem):
         #define nossa cobra em tamanho e skin
-        self.corpo = [(320, 320), (352, 320), (384,320)]
-        # a skin tem que ser umaimagem 32x que vai ser o tanho real do objerto para a colisão funcianar corretamente
-        self.cabeca = pygame.image.load('imagens/cobra/cabecacobra.png')
-        self.corpo_verm = pygame.image.load('imagens/cobra/c_corpo_verm.png')
-        self.corpo_preto = pygame.image.load('imagens/cobra/c_corpo_preto.png')
-        self.cauda_verm = pygame.image.load('imagens/cobra/c_cauda_verm.png')
-        self.cauda_preto = pygame.image.load('imagens/cobra/c_cauda_preto.png')
+        self.posicaoX = x 
+        self.posicaoY = y 
+        self.posicao = (self.posicaoX, self.posicaoY)
+        self.sprite = imagem 
+
+    def update_pos(self, new_x, new_y):
+        self.posicaoX = new_x
+        self.posicaoY = new_y
+        self.posicao = (self.posicaoX, self.posicaoY)
+
+    def update_sprite(self, new_imagem):
+        self.sprite = new_imagem 
+
+    def rotacao(self, angulo):
+        sprite_rodado = pygame.transform.rotate(self.sprite, angulo)
+        return sprite_rodado
+
+cabeca = Cobra(320, 320, cabeca_img)
+corpo1 = Cobra(352, 320, corpo_verm_img)
+cauda = Cobra(384, 320, cauda_preto_img)
