@@ -30,3 +30,14 @@ argentina = time(pygame.image.load('imagens/times/i_argentina.png'))
 marte = time(pygame.image.load('imagens/times/i_marte.png'))
 jupiter = time(pygame.image.load('imagens/times/i_jupiter.png'))
 saturno = time(pygame.image.load('imagens/times/i_saturn.png'))
+
+class Cobra:
+    def __init__(self):
+        #define nossa cobra em tamanho e skin
+        self.corpo = [(320, 320), (352, 320), (384,320)]
+        # a skin tem que ser umaimagem 32x que vai ser o tanho real do objerto para a colisão funcianar corretamente
+        self.cabeca = pygame.image.load('imagens/cobra/cabecacobra.png')
+        self.corpo_verm = pygame.image.load('imagens/cobra/c_corpo_verm.png')
+        self.corpo_preto = pygame.image.load('imagens/cobra/c_corpo_preto.png')
+        self.cauda_verm = pygame.image.load('imagens/cobra/c_cauda_verm.png')
+        self.cauda_preto = pygame.image.load('imagens/cobra/c_cauda_preto.png')

@@ -1,4 +1,5 @@
 from declaracoes import *
+from classes import *
 
 # Helper functions
 # função que escolhe um lugar aleatoria para o spw dos times 
